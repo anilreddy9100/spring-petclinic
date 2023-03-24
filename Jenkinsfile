@@ -15,13 +15,14 @@ pipeline{
                 sh "mvn ${params.maven_goal}"
             }
         }
-        stage('SonarQube analysis') 
+        stage('SonarQube analysis') {
             steps{
-            withSonarQubeEnv('SONAR_TOKEN') {
-            sh 'mvn clean package sonar:sonar'
-        } // submitted SonarQube taskId is automatically attached to the pipeline context
+                withSonarQubeEnv('SONAR_TOKEN') {
+      sh 'mvn clean package sonar:sonar'
+              } 
+            }
         }
-
+           
         stage ( 'postbuild' ){
             steps {
                 archiveArtifacts artifacts: '**/spring-petclinic-*.jar',
