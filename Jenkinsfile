@@ -15,5 +15,12 @@ pipeline{
                 sh "mvn ${params.maven_goal}"
             }
         }
+        stage ( 'postbuild' ){
+            steps {
+                archiveArtifacts artifacts: '**/spring-petclinic-*.jar'
+                     onlyIfSuccessful : true
+                junit testResults : '**/TEST-*xml'     
+            }
+        }
     }
 }
