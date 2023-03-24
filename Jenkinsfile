@@ -1,6 +1,6 @@
 pipeline{
     agent any
-    triggers{ pollScm ('* * * * *') }
+    triggers{ pollSCM ('* * * * *') }
     parameters { choice (name: 'maven_goal', choices: ['package', 'install', 'deploy'], description: 'bulid with parametets')}
     stages{
         stage ('vcs'){
