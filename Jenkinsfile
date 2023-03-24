@@ -1,6 +1,6 @@
 pipeline{
     agent any
-    triggers{ pollSCM ('15 * * *') }
+    triggers{ pollSCM ('* * * * *') }
     parameters { choice (name: 'maven_goal', choices: ['package', 'install', 'deploy'], description: 'bulid with parametets')}
     stages{
         stage ('vcs'){
@@ -18,11 +18,11 @@ pipeline{
         stage('SonarQube analysis') {
             steps{
                 withSonarQubeEnv('SONAR_TOKEN') {
-      sh 'mvn clean package sonar:sonar'
+                sh 'mvn clean package sonar:sonar  -Dsonar.organization=anil12345  -Dsonar.projectKey=ANIL123456789 -Dsonar.projectName=ANIL123456789'
               } 
             }
         }
-           
+        
         stage ( 'postbuild' ){
             steps {
                 archiveArtifacts artifacts: '**/spring-petclinic-*.jar',
@@ -31,4 +31,4 @@ pipeline{
             }
         }
     }
-}
+} 
