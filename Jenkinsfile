@@ -1,6 +1,6 @@
 pipeline{
     agent any
-    triggers{ pollSCM ('* * * * *') }
+    triggers{ pollSCM ('15 * * *') }
     parameters { choice (name: 'maven_goal', choices: ['package', 'install', 'deploy'], description: 'bulid with parametets')}
     stages{
         stage ('vcs'){
@@ -15,7 +15,8 @@ pipeline{
                 sh "mvn ${params.maven_goal}"
             }
         }
-        stage('SonarQube analysis') {
+        stage('SonarQube analysis') 
+            steps{
             withSonarQubeEnv('SONAR_TOKEN') {
             sh 'mvn clean package sonar:sonar'
         } // submitted SonarQube taskId is automatically attached to the pipeline context
