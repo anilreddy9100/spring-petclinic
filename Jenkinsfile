@@ -17,7 +17,7 @@ pipeline{
         }
         stage ( 'postbuild' ){
             steps {
-                archiveArtifacts artifacts: '**/spring-petclinic-*.jar'
+                archiveArtifacts artifacts: '**/spring-petclinic-*.jar',
                      onlyIfSuccessful: true
                 junit testResults : '**/TEST-*xml'     
             }
